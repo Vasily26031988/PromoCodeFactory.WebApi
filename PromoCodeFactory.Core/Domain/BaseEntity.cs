@@ -4,7 +4,8 @@ using System.Text;
 
 namespace PromoCodeFactory.Core.Domain
 {
-    class BaseEntity
+    public class BaseEntity
     {
+	    public Guid Id { get; set; }
     }
 }

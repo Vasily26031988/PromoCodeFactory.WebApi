@@ -7,5 +7,6 @@ namespace PromoCodeFactory.WebHost.Models
 {
     public class PreferenceResponse
     {
+
     }
 }
