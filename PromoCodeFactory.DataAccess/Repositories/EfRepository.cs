@@ -79,14 +79,22 @@ namespace PromoCodeFactory.DataAccess.Repositories
 			return entities;
 		}
 
-		public Task<IEnumerable<T>> GetWhere(Expression<Func<T, bool>> predicate)
+		public async Task<IEnumerable<T>> GetWhere(Expression<Func<T, bool>> predicate)
 		{
-			throw new NotImplementedException();
+			if (predicate == null)
+				throw new ArgumentNullException(nameof(predicate));
+
+			var entities = await _dataContext.Set<T>().Where(predicate).ToListAsync();
+			return entities;
 		}
 
-		public Task UpdateAsync(T entity)
+		public async Task UpdateAsync(T entity)
 		{
-			throw new NotImplementedException();
+			if (entity == null)
+				throw new ArgumentNullException(nameof(entity));
+
+			_dataContext.Set<T>().Update(entity);
+			await _dataContext.SaveChangesAsync();
 		}
 	}
 }

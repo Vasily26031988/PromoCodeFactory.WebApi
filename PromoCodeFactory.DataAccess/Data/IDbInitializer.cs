@@ -4,7 +4,8 @@ using System.Text;
 
 namespace PromoCodeFactory.DataAccess.Data
 {
-    interface IDbInitializer
+    public interface IDbInitializer
     {
+	    public void InitializeDb();
     }
 }
