@@ -25,7 +25,9 @@ namespace PromoCodeFactory.WebHost.Controllers
 
 
 
-        public PromocodesController(IRepository<PromoCode> promoCodeRepository, IRepository<Preference> preferenceRepository, IRepository<Customer> customerRepository)
+        public PromocodesController(IRepository<PromoCode> promoCodeRepository, 
+	        IRepository<Preference> preferenceRepository, 
+	        IRepository<Customer> customerRepository)
         {
 	        _promoCodeRepository = promoCodeRepository;
 	        _preferenceRepository = preferenceRepository;

@@ -20,10 +20,10 @@ namespace PromoCodeFactory.DataAccess
 		public DataContext()
 		{
 		}
-
 		public DataContext(DbContextOptions<DataContext> options) : base(options)
 		{
 		}
+
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{

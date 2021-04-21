@@ -24,6 +24,7 @@ namespace PromoCodeFactory.WebHost
 			{
 				builder.UseSqlite("Filename=PromocodeFactoryDb.sqlite");
 				builder.UseLazyLoadingProxies();
+
 			});
 
 
@@ -33,9 +34,8 @@ namespace PromoCodeFactory.WebHost
 				options.Version = "1.0";
 			});
 		}
-
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+		public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IDbInitializer dbInitializer)
 		{
 			if (env.IsDevelopment())
 			{
@@ -53,6 +53,8 @@ namespace PromoCodeFactory.WebHost
 				x.DocExpansion = "list";
 			});
 
+
+
 			app.UseHttpsRedirection();
 
 			app.UseRouting();
@@ -61,9 +63,8 @@ namespace PromoCodeFactory.WebHost
 			{
 				endpoints.MapControllers();
 			});
-
+			
 			dbInitializer.InitializeDb();
-
 		}
 	}
 }

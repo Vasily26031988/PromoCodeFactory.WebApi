@@ -9,7 +9,7 @@ namespace PromoCodeFactory.Core.Domain.PromoCodeManagement
 
 	    public Guid PromoCodeId { get; set; }
 
-	    public PromoCode PromoCode { get; set; }
+	    public virtual PromoCode PromoCode { get; set; }
 
 	    public Guid CustomerId { get; set; }
 

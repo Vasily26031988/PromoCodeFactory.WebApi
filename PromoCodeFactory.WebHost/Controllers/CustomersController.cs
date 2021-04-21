@@ -14,14 +14,12 @@ namespace PromoCodeFactory.WebHost.Controllers
 	/// Клиенты
 	/// </summary>
 	[ApiController]
-    [Route("api/v1/[controller]")]
+	[Route("api/v1/[controller]")]
 	public class CustomersController 
 	    : ControllerBase
 	{
 		private readonly IRepository<Customer> _customerRepository;
 		private readonly IRepository<Preference> _preferenceRepository;
-
-
 
 		public CustomersController(
 			IRepository<Customer> customerRepository, 
@@ -61,11 +59,10 @@ namespace PromoCodeFactory.WebHost.Controllers
 		}
 
 		/// <summary>
-		/// Обновить данные клиента
+		/// Добавить клиента
 		/// </summary>
-		/// <param name="id">Идентификатор клиента</param>
 		/// <param name="request">Информация о клиенте</param>
-		[HttpPut("{id}")]
+		[HttpPost]
 		public async Task<ActionResult<CustomerResponse>> CreateCustomerAsync(CreateOrEditCustomerRequest request)
 		{
 			if (request == null)
@@ -78,6 +75,29 @@ namespace PromoCodeFactory.WebHost.Controllers
 
 			var response = new CustomerResponse(customer);
 			return CreatedAtRoute(null, response);
+		}
+
+		/// <summary>
+		/// Обновить данные клиента
+		/// </summary>
+		/// <param name="id">Идентификатор клиента</param>
+		/// <param name="request">Информация о клиенте</param>
+		[HttpPut("{id}")]
+		public async Task<IActionResult> EditCustomerAsync(Guid id, CreateOrEditCustomerRequest request)
+		{
+			if (request == null)
+				return BadRequest();
+
+			var customer = await _customerRepository.GetByIdAsync(id);
+			if (customer == null)
+				return NotFound();
+
+			var preferences = await GetPreferencesAsync(request.PreferenceIds);
+			CustomerMapper.MapFromModel(request, preferences, customer);
+
+			await _customerRepository.UpdateAsync(customer);
+
+			return NoContent();
 		}
 
 		/// <summary>
@@ -96,7 +116,7 @@ namespace PromoCodeFactory.WebHost.Controllers
 			return NoContent();
 		}
 
-		private Task<IEnumerable<Preference>> GetPreferencesAsync(IEnumerable<Guid> ids)
+		public Task<IEnumerable<Preference>> GetPreferencesAsync(IEnumerable<Guid> ids)
 		{
 			if (ids?.Any() == true)
 			{
