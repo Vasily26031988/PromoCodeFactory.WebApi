@@ -116,6 +116,11 @@ namespace PromoCodeFactory.WebHost.Controllers
 			return NoContent();
 		}
 
+		/// <summary>
+		/// Получить предпочтения клиента
+		/// </summary>
+		/// <param name="preferences">Идентификатор клиента</param>
+		[HttpGet("preferences")]
 		public Task<IEnumerable<Preference>> GetPreferencesAsync(IEnumerable<Guid> ids)
 		{
 			if (ids?.Any() == true)
